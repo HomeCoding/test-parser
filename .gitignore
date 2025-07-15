@@ -1,9 +1,0 @@
-# Ignore the virtual environment directory
-venv/
-
-# Ignore the generated offers file
-offers.json
-
-# Ignore pycache directories
-__pycache__/
-*.pyc
