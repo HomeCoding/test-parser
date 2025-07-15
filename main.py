@@ -23,7 +23,7 @@ def parse_offers():
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.binary_location = "/usr/bin/google-chrome"
+    # options.binary_location = "/usr/bin/google-chrome"
 
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
 
@@ -38,7 +38,12 @@ def parse_offers():
         try:
             name = product.find("div", class_="product-tile__name").text.strip()
             price_element = product.find("div", class_="price-tile__sales")
-            price = price_element.text.strip() if price_element else "N/A"
+            if price_element:
+                price_text = price_element.text.strip()
+                # Remove all non-digit characters except for a potential decimal separator
+                price = "".join(filter(lambda char: char.isdigit() or char in ",", price_text)).replace(",", ".")
+            else:
+                price = "N/A"
 
             offers.append({"name": name, "price": price})
         except AttributeError:
