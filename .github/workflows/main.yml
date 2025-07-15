@@ -25,10 +25,8 @@ jobs:
       run: |
         make all
 
-    - name: Commit and push if there are changes
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add offers.json
-        git commit -m "Update offers" || echo "No changes to commit"
-        git push
+    - name: Upload offers artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: offers
+        path: offers.json
